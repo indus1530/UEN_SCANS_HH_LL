@@ -8,7 +8,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingEnd="@dimen/activity_horizontal_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="edu.aku.hassannaqvi.uenmd_hhlisting.activities.home.MainActivity">
+    tools:context="edu.aku.hassannaqvi.uenscans_hhlisting.activities.home.MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -228,8 +228,7 @@
                 android:layout_weight="1"
                 android:onClick="openClusterMap"
                 android:text="Check Cluster Map"
-                android:textColor="#7139c2"
-                android:visibility="gone" />
+                android:textColor="#7139c2" />
 
             <CheckBox
                 android:id="@+id/chkconfirm"

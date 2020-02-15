@@ -15,7 +15,7 @@ android {
         versionProps.store(versionPropsFile.newWriter(), null)
 
         defaultConfig {
-            applicationId "edu.aku.hassannaqvi.uenmd_hhlisting"
+            applicationId "edu.aku.hassannaqvi.uenscans_hhlisting"
             minSdkVersion 22
             targetSdkVersion 29
             versionCode code
@@ -61,7 +61,7 @@ dependencies {
     implementation 'com.jakewharton:butterknife:10.2.1'
     // CardView
     implementation 'androidx.cardview:cardview:1.0.0'
-    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'com.google.android.material:material:1.1.0'
     implementation 'androidx.vectordrawable:vectordrawable-animated:1.1.0'
     implementation 'androidx.media:media:1.1.0'
     implementation 'androidx.appcompat:appcompat:1.1.0'

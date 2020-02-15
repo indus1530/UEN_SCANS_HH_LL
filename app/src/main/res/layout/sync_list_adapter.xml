@@ -9,7 +9,7 @@
 
         <variable
             name="callback"
-            type="edu.aku.hassannaqvi.uenmd_hhlisting.adapters.SyncListAdapter" />
+            type="edu.aku.hassannaqvi.uenscans_hhlisting.adapters.SyncListAdapter" />
     </data>
 
     <androidx.cardview.widget.CardView

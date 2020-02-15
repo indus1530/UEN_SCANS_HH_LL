@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">UEN-Midline Linelisting</string>
+    <string name="app_name">UEN-SCANS Linelisting</string>
     <string name="hh02"> کلسٹر کوڈ  </string>
     <string name="hh03"> اسٹرکچر نمبر </string>
     <string name="hh04"> تعمیراتی ساخت </string>
@@ -15,7 +15,7 @@
     <string name="hh08"> خاندان کے سربراہ کا نام </string>
     <string name="hh09"> موبائل نمبر </string>
     <string name="hh10a"> تعداد </string>
-    <string name="hh10">   کیا اس گھر میں کوئی شادی شدہ خواتین رہ رہی ہیں جن کی عمر 15 سے 49 سال کے درمیان ہے اور 5 سال سے کم عمر کے بچے ہیں؟ </string>
+    <string name="hh10">   کیا اس گھر میں کوئی شادی شدہ خواتین رہ رہی ہیں جن کی عمر 15 سے 49 سال کے درمیان ہے اور 10-\5 سال سے کم عمر کے بچے ہیں؟ </string>
     <string name="hh16"> افراد کی تعداد </string>
     <string name="hh17"> کیا اس گھر میں مذید کوئی خاندان رہائش پزیر ہے </string>
     <string name="na101a"> ضلعہ </string>
