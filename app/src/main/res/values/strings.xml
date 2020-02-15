@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">UEN-SCANS Linelisting - Sindhi</string>
+    <string name="app_name"> UEN-SCANS Linelisting </string>
 
     <!--Ali added-->
     <string name="hh02"> ڪلسٽر نمبر </string>
@@ -38,16 +38,14 @@
     <string name="btnUpload">Upload</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Login</string>
-    <string name="action_sign_in_short">Log in</string>
-    <string name="error_invalid_email">This email address is invalid</string>
-    <string name="error_invalid_password">This password is too short</string>
-    <string name="error_incorrect_password">This password is incorrect</string>
-    <string name="error_field_required">This field is required</string>
-    <string name="permission_rationale">"Contacts permissions are needed for providing email
-        completions."
-    </string>
-    <string name="title_activity_maps">Map</string>
+    <string name="action_sign_in"> Login </string>
+    <string name="action_sign_in_short"> Log in </string>
+    <string name="error_invalid_email"> This email address is invalid </string>
+    <string name="error_invalid_password"> This password is too short </string>
+    <string name="error_incorrect_password"> This password is incorrect </string>
+    <string name="error_field_required"> This field is required </string>
+    <string name="permission_rationale"> "Contacts permissions are needed for providing email completions." </string>
+    <string name="title_activity_maps"> Map </string>
 
     <string name="client_text">This device will act as a client. Click on Gallery button to pick a local(stored) file</string>
     <string name="empty_message">No devices found. Turn on P2P and perform discovery from the Action Bar</string>
@@ -60,7 +58,7 @@
     <string name="disconnect_peer_button">Disconnect</string>
     <string name="enable_p2p_button">Enable Wifi</string>
     <string name="discover_peers_button">Find Near-By Devices</string>
-    <string name="country_prompt">Choose a country</string>
+    <string name="country_prompt"> Choose a country </string>
     <string name="txtName"> qwertyuiop asdfghjkl zxcvbnm QWERTYUIOP ASDFGHJKL ZXCVBNM </string>
 
 </resources>
