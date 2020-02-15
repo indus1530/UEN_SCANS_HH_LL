@@ -22,6 +22,7 @@ import java.util.List;
 import edu.aku.hassannaqvi.uenscans_hhlisting.Contracts.EnumBlockContract;
 import edu.aku.hassannaqvi.uenscans_hhlisting.Contracts.UsersContract;
 import edu.aku.hassannaqvi.uenscans_hhlisting.Contracts.VersionAppContract;
+import edu.aku.hassannaqvi.uenscans_hhlisting.Contracts.VerticesContract;
 import edu.aku.hassannaqvi.uenscans_hhlisting.Core.DatabaseHelper;
 import edu.aku.hassannaqvi.uenscans_hhlisting.Core.MainApp;
 import edu.aku.hassannaqvi.uenscans_hhlisting.Other.SyncModel;
@@ -59,6 +60,9 @@ public class GetAllData extends AsyncTask<String, String, String> {
             case "EnumBlock":
                 position = 0;
                 break;
+            case "Vertices":
+                position = 1;
+                break;
             case "User":
                 position = 0;
                 break;
@@ -90,6 +94,9 @@ public class GetAllData extends AsyncTask<String, String, String> {
             case "EnumBlock":
                 position = 0;
                 break;
+            case "Vertices":
+                position = 1;
+                break;
             case "User":
                 position = 0;
                 break;
@@ -115,6 +122,10 @@ public class GetAllData extends AsyncTask<String, String, String> {
                     url = new URL(MainApp._HOST_URL + EnumBlockContract.EnumBlockTable._URI);
                     position = 0;
                     break;
+                case "Vertices":
+                    url = new URL(MainApp._HOST_URL + VerticesContract.SingleVertices._URI);
+                    position = 1;
+                    break;
                 case "User":
                     url = new URL(MainApp._HOST_URL + UsersContract.UsersTable._URI);
                     position = 0;
@@ -131,6 +142,7 @@ public class GetAllData extends AsyncTask<String, String, String> {
 
             switch (syncClass) {
                 case "EnumBlock":
+                case "Vertices":
 
                     if (args[0] != null && !args[0].equals("")) {
                         if (Integer.valueOf(args[0]) > 0) {
@@ -225,6 +237,10 @@ public class GetAllData extends AsyncTask<String, String, String> {
                         case "EnumBlock":
                             db.syncEnumBlocks(jsonArray);
                             position = 0;
+                            break;
+                        case "Vertices":
+                            db.syncVertices(jsonArray);
+                            position = 1;
                             break;
                         case "User":
                             db.syncUsers(jsonArray);

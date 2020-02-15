@@ -24,7 +24,7 @@ import java.util.List;
 
 import edu.aku.hassannaqvi.uenscans_hhlisting.Core.DatabaseHelper;
 import edu.aku.hassannaqvi.uenscans_hhlisting.Other.SyncModel;
-import edu.aku.hassannaqvi.uenscans_hhlisting.adapters.Upload_list_adapter;
+import edu.aku.hassannaqvi.uenscans_hhlisting.adapters.UploadListAdapter;
 
 /**
  * Created by ali.azaz on 3/14/2018.
@@ -32,46 +32,30 @@ import edu.aku.hassannaqvi.uenscans_hhlisting.adapters.Upload_list_adapter;
 
 public class SyncAllData extends AsyncTask<Void, Integer, String> {
 
-    private final static String NO_RECORDS = "No new records to sync";
-    Upload_list_adapter adapter;
-    List<SyncModel> uploadlist;
-    private String TAG = "";
+    private UploadListAdapter adapter;
+    private List<SyncModel> uploadlist;
+    private int position;
+    private String TAG;
     private Context mContext;
     private ProgressDialog pd;
-    private String syncClass, url, updateSyncClass;
+    private String syncClass, url, tableName, updateSyncClass;
     private Class contractClass;
     private Collection dbData;
-    int position;
 
-
-    public SyncAllData(Context context, String syncClass, String updateSyncClass, Class contractClass, String url, Collection dbData) {
-        mContext = context;
+    public SyncAllData(Context mContext, String syncClass, String updateSyncClass, Class contractClass, String url,
+                       String tableName, Collection dbData, int position, UploadListAdapter adapter, List<SyncModel> uploadlist) {
+        this.mContext = mContext;
         this.syncClass = syncClass;
         this.updateSyncClass = updateSyncClass;
         this.contractClass = contractClass;
         this.url = url;
-        this.dbData = dbData;
-        this.position = position;
-        //this.syncStatus = (TextView) syncStatus;
-        TAG = "Get" + syncClass;
-        uploadlist.get(position).settableName(syncClass);
-    }
-
-    public SyncAllData(Context context, String syncClass, String updateSyncClass, Class contractClass, String url, Collection dbData, int position, Upload_list_adapter adapter, List<SyncModel> uploadlist) {
-        mContext = context;
-        this.syncClass = syncClass;
-        this.updateSyncClass = updateSyncClass;
-        this.contractClass = contractClass;
-        this.url = url;
+        this.tableName = tableName;
         this.dbData = dbData;
         this.position = position;
         this.adapter = adapter;
         this.uploadlist = uploadlist;
-        //this.syncStatus = (TextView) syncStatus;
         TAG = "Get" + syncClass;
         uploadlist.get(position).settableName(syncClass);
-       /* uploadlist.get(position).setstatusID(0);
-        uploadlist.get(position).setmessage("");*/
     }
 
     @Override
@@ -153,13 +137,22 @@ public class SyncAllData extends AsyncTask<Void, Integer, String> {
                             break;
                         }
 
-                    } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+                    } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
                         e.printStackTrace();
                     }
 
-                    wr.writeBytes(jsonSync.toString().replace("\uFEFF", "") + "\n");
-                    wr.flush();
+                    //TODO table server
+                    JSONObject jsonTable = new JSONObject();
+                    jsonTable.put("table", tableName);
 
+
+                    JSONArray jsonParam = new JSONArray();
+                    jsonParam
+                            .put(jsonTable)
+                            .put(jsonSync);
+
+                    wr.writeBytes(String.valueOf(jsonParam));
+                    wr.flush();
 
                     BufferedReader br = new BufferedReader(new InputStreamReader(
                             connection.getInputStream(), StandardCharsets.UTF_8));
@@ -175,21 +168,15 @@ public class SyncAllData extends AsyncTask<Void, Integer, String> {
                     System.out.println(connection.getResponseMessage());
                     return connection.getResponseMessage();
                 }
-            } catch (IOException e) {
+            } catch (IOException | JSONException e) {
                 e.printStackTrace();
             } finally {
                 if (connection != null)
                     connection.disconnect();
             }
         } else {
-          /*  uploadlist.get(position).setstatus("Completed");
-            uploadlist.get(position).setstatusID(3);
-            adapter.updatesyncList(uploadlist);*/
-            return NO_RECORDS;
+            return "No new records to sync";
         }
-        /*uploadlist.get(position).setstatus("Completed");
-        uploadlist.get(position).setstatusID(3);
-        adapter.updatesyncList(uploadlist);*/
         return line;
     }
 
@@ -198,8 +185,8 @@ public class SyncAllData extends AsyncTask<Void, Integer, String> {
         super.onPostExecute(result);
         int sSynced = 0;
         int sDuplicate = 0;
-        StringBuilder sSyncedError = new StringBuilder();
-        JSONArray json = null;
+        String sSyncedError = "";
+        JSONArray json;
         try {
             json = new JSONArray(result);
 
@@ -220,19 +207,17 @@ public class SyncAllData extends AsyncTask<Void, Integer, String> {
 
                     //  db.updateSyncedChildForm(jsonObject.getString("id"));  // UPDATE SYNCED
 
-                    assert method != null;
                     method.invoke(db, jsonObject.getString("id"));
 
                     sSynced++;
                 } else if (jsonObject.getString("status").equals("2") && jsonObject.getString("error").equals("0")) {
                     //db.updateSyncedChildForm(jsonObject.getString("id")); // UPDATE DUPLICATES
 
-                    assert method != null;
                     method.invoke(db, jsonObject.getString("id"));
 
                     sDuplicate++;
                 } else {
-                    sSyncedError.append("\nError: ").append(jsonObject.getString("message"));
+                    sSyncedError += "\nError: " + jsonObject.getString("message");
                 }
             }
             Toast.makeText(mContext, syncClass + " synced: " + sSynced + "\r\n\r\n Errors: " + sSyncedError, Toast.LENGTH_SHORT).show();
@@ -241,7 +226,7 @@ public class SyncAllData extends AsyncTask<Void, Integer, String> {
             pd.setMessage(syncClass + " synced: " + sSynced + "\r\n\r\n Duplicates: " + sDuplicate + "\r\n\r\n Errors: " + sSyncedError);
             pd.setTitle("Done uploading +" + syncClass + " data");
 //            pd.show();
-            if (sSyncedError.toString().equals("")) {
+            if (sSyncedError.equals("")) {
                 uploadlist.get(position).setmessage(syncClass + " synced: " + sSynced + "\r\n\r\n Duplicates: " + sDuplicate + "\r\n\r\n Errors: " + sSyncedError);
                 uploadlist.get(position).setstatus("Completed");
                 uploadlist.get(position).setstatusID(3);
@@ -257,13 +242,12 @@ public class SyncAllData extends AsyncTask<Void, Integer, String> {
 
         } catch (JSONException e) {
             e.printStackTrace();
-            if (!result.equals(NO_RECORDS))
-                Toast.makeText(mContext, "Failed Sync " + result, Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, "Sync Result:  " + result, Toast.LENGTH_SHORT).show();
 
             pd.setMessage(result);
             pd.setTitle(syncClass + " Sync Failed");
 //            pd.show();
-            if (result.equals(NO_RECORDS)) {
+            if (result.equals("No new records to sync")) {
                 uploadlist.get(position).setmessage(result);
                 uploadlist.get(position).setstatus("Not processed");
                 uploadlist.get(position).setstatusID(4);
@@ -275,7 +259,9 @@ public class SyncAllData extends AsyncTask<Void, Integer, String> {
                 adapter.updatesyncList(uploadlist);
             }
             //syncStatus.setText(syncStatus.getText() + "\r\n" + syncClass + " Sync Failed");
-        } catch (IllegalAccessException | InvocationTargetException e) {
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
             e.printStackTrace();
         }
     }

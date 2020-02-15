@@ -15,11 +15,11 @@ import edu.aku.hassannaqvi.uenscans_hhlisting.Other.SyncModel;
 import edu.aku.hassannaqvi.uenscans_hhlisting.R;
 import edu.aku.hassannaqvi.uenscans_hhlisting.databinding.UploadListAdapterBinding;
 
-public class Upload_list_adapter extends RecyclerView.Adapter<Upload_list_adapter.UploadListViewHolder> {
+public class UploadListAdapter extends RecyclerView.Adapter<UploadListAdapter.UploadListViewHolder> {
     List<SyncModel> uploadlist;
     UploadListViewHolder holder;
 
-    public Upload_list_adapter(List<SyncModel> uploadlist) {
+    public UploadListAdapter(List<SyncModel> uploadlist) {
         this.uploadlist = uploadlist;
     }
 

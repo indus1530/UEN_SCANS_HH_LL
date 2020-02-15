@@ -37,7 +37,7 @@ import edu.aku.hassannaqvi.uenscans_hhlisting.R;
 import edu.aku.hassannaqvi.uenscans_hhlisting.Sync.SyncAllData;
 import edu.aku.hassannaqvi.uenscans_hhlisting.Sync.SyncDevice;
 import edu.aku.hassannaqvi.uenscans_hhlisting.adapters.SyncListAdapter;
-import edu.aku.hassannaqvi.uenscans_hhlisting.adapters.Upload_list_adapter;
+import edu.aku.hassannaqvi.uenscans_hhlisting.adapters.UploadListAdapter;
 import edu.aku.hassannaqvi.uenscans_hhlisting.databinding.ActivitySyncBinding;
 
 public class SyncActivity extends AppCompatActivity implements SyncDevice.SyncDevicInterface {
@@ -46,7 +46,7 @@ public class SyncActivity extends AppCompatActivity implements SyncDevice.SyncDe
     String DirectoryName;
     DatabaseHelper db;
     SyncListAdapter syncListAdapter;
-    Upload_list_adapter uploadListAdapter;
+    UploadListAdapter uploadListAdapter;
     ActivitySyncBinding bi;
     SyncModel model;
     SyncModel uploadmodel;
@@ -115,7 +115,7 @@ public class SyncActivity extends AppCompatActivity implements SyncDevice.SyncDe
     }
 
     void setUploadAdapter() {
-        uploadListAdapter = new Upload_list_adapter(uploadlist);
+        uploadListAdapter = new UploadListAdapter(uploadlist);
         RecyclerView.LayoutManager mLayoutManager2 = new LinearLayoutManager(getApplicationContext());
         bi.rvUploadList.setLayoutManager(mLayoutManager2);
         bi.rvUploadList.setItemAnimator(new DefaultItemAnimator());
@@ -158,6 +158,7 @@ public class SyncActivity extends AppCompatActivity implements SyncDevice.SyncDe
                     "updateSyncedForms",
                     ListingContract.class,
                     MainApp._HOST_URL + ListingContract.ListingEntry._URL,
+                    ListingContract.ListingEntry.TABLE_NAME,
                     db.getUnsyncedListings(), 0, uploadListAdapter, uploadlist
             ).execute();
 
@@ -296,6 +297,14 @@ public class SyncActivity extends AppCompatActivity implements SyncDevice.SyncDe
                         list.add(model);
                     }
                     new GetAllData(mContext, "EnumBlock", syncListAdapter, list).execute(countryID);
+
+//                  getting Enum Blocks
+                    if (listActivityCreated) {
+                        model = new SyncModel();
+                        model.setstatusID(0);
+                        list.add(model);
+                    }
+                    new GetAllData(mContext, "Vertices", syncListAdapter, list).execute(countryID);
 
 
                     bi.noItem.setVisibility(View.GONE);
