@@ -564,7 +564,7 @@ public class ListingContract {
         public static final String COLUMN_NAME_NULLABLE = "NULLHACK";
         public static final String _ID = "_id";
         public static final String COLUMN_NAME_UID = "uid";
-        public static final String COLUMN_NAME_HHDATETIME = "hhdt";
+        public static final String COLUMN_NAME_HHDATETIME = "formdate";
 
         public static final String COLUMN_NAME_ENUMCODE = "enumcode";
         public static final String COLUMN_NAME_CLUSTERCODE = "clustercode";

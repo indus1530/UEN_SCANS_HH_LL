@@ -407,10 +407,12 @@ public class MainActivity extends MenuActivity {
 
         if (!txtPSU.getText().toString().isEmpty()) {
 
+            if (txtPSU.getText().toString().trim().length() < 4) return;
+
             txtPSU.setError(null);
             boolean loginFlag;
-            int clus = Integer.valueOf(txtPSU.getText().toString().substring(3, 6));
-            if (clus < 500) {
+            int clus = Integer.valueOf(txtPSU.getText().toString().substring(1, 4));
+            if (clus < 900) {
                 loginFlag = !(MainApp.userEmail.equals("test1234") || MainApp.userEmail.equals("dmu@aku") || MainApp.userEmail.substring(0, 4).equals("user"));
             } else {
                 loginFlag = MainApp.userEmail.equals("test1234") || MainApp.userEmail.equals("dmu@aku") || MainApp.userEmail.substring(0, 4).equals("user");

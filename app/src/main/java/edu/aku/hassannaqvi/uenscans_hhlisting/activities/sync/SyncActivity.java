@@ -157,7 +157,7 @@ public class SyncActivity extends AppCompatActivity implements SyncDevice.SyncDe
                     "Listing Form",
                     "updateSyncedForms",
                     ListingContract.class,
-                    MainApp._HOST_URL + ListingContract.ListingEntry._URL,
+                    MainApp._HOST_URL + MainApp._SERVER_URL,
                     ListingContract.ListingEntry.TABLE_NAME,
                     db.getUnsyncedListings(), 0, uploadListAdapter, uploadlist
             ).execute();
