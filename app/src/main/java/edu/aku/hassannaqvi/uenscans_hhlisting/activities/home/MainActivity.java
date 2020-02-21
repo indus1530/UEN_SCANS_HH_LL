@@ -285,7 +285,7 @@ public class MainActivity extends MenuActivity {
 
                         editorDownload.putLong("refID", refID);
                         editorDownload.putBoolean("flag", false);
-                        editorDownload.commit();
+                        editorDownload.apply();
 
                     } else {
                         lblAppVersion.setText("UEN-Scans Linelisting APP New Version " + newVer + "  Available..\n(Can't download.. Internet connectivity issue!!)");
@@ -411,8 +411,8 @@ public class MainActivity extends MenuActivity {
 
             txtPSU.setError(null);
             boolean loginFlag;
-            int clus = Integer.valueOf(txtPSU.getText().toString().substring(1, 4));
-            if (clus < 900) {
+            int clus = Integer.valueOf(txtPSU.getText().toString());
+            if (clus <= 5000) {
                 loginFlag = !(MainApp.userEmail.equals("test1234") || MainApp.userEmail.equals("dmu@aku") || MainApp.userEmail.substring(0, 4).equals("user"));
             } else {
                 loginFlag = MainApp.userEmail.equals("test1234") || MainApp.userEmail.equals("dmu@aku") || MainApp.userEmail.substring(0, 4).equals("user");
